@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.core.KafkaTemplate;
 
+import java.util.concurrent.ExecutionException;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
@@ -20,9 +21,16 @@ public class EventsSender<T> implements Consumer<T> {
 
     @Override
     public void accept(T event) {
-        String key = keyFunction.apply(event);
-        Integer partition = (partitionFunction != null) ? partitionFunction.apply(event) : null;
+        var key = keyFunction.apply(event);
+        var partition = (partitionFunction != null) ? partitionFunction.apply(event) : null;
         log.debug("Sending [{}] on partition [{}]", key, partition);
-        kafkaTemplate.send(eventsTopic, partition, key, event);
+        try {
+            var sendResult = kafkaTemplate.send(eventsTopic, partition, key, event).get();
+            log.info("Sent record: {}", sendResult);
+        } catch (InterruptedException e) {
+            log.error("Failed to send", e);
+        } catch (ExecutionException e) {
+            log.error("Failed to send", e);
+        }
     }
 }
