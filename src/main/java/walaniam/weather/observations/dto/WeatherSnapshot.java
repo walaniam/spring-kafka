@@ -5,12 +5,15 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.ZonedDateTime;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
 @Builder
 public class WeatherSnapshot {
-    private long timestamp;
-    private String temperatureValue;
-    private TemperatureScale scale;
+    private ZonedDateTime dateTime;
+    private String outsideTemperature;
+    private String insideTemperature;
+    private String pressurehPa;
 }
