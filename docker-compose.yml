@@ -1,0 +1,57 @@
+version: '3.7'
+
+services:
+  app:
+    image: 'weather-observations:latest'
+    build:
+      context: .
+    container_name: app
+    environment:
+      ENV_VAR:
+    ports:
+      - 7070:7070
+    restart: on-failure
+    depends_on:
+      - mongo_db
+      - mysql_db
+
+  mongo_db:
+    image: mongo:4.4.13-focal
+    container_name: weather_mongo_db
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: mongo
+      MONGO_INITDB_ROOT_PASSWORD: mongo
+    volumes:
+      - mongodb_data:/data/db
+    restart: on-failure
+
+  mongo_ui:
+    image: mongo-express:1.0.0-alpha.4
+    container_name: weather_mongo_ui
+    environment:
+      ME_CONFIG_MONGODB_URL: "mongodb://mongo:mongo@mongo_db:27017?ssl=false"
+      ME_CONFIG_OPTIONS_READONLY: "true"
+      ME_CONFIG_OPTIONS_NO_DELETE: "false"
+    ports:
+    - 8081:8081
+    restart: on-failure
+    depends_on:
+      - mongo_db
+
+  mysql_db:
+    image: mysql/mysql-server:8.0-amd64
+    container_name: weather_mysql_db
+    environment:
+      MYSQL_USER: mysql
+      MYSQL_PASSWORD: mysql
+      MYSQL_ROOT_PASSWORD: rootmysql
+    ports:
+    - 3306:3306
+    restart: on-failure
+    volumes:
+    - mysqldb_data:/var/lib/mysql
+#    - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
+
+volumes:
+  mongodb_data:
+  mysqldb_data:

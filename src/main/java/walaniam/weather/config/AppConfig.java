@@ -3,6 +3,7 @@ package walaniam.weather.config;
 import lombok.extern.slf4j.Slf4j;
 import okhttp3.ConnectionPool;
 import okhttp3.OkHttpClient;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.client.OkHttp3ClientHttpRequestFactory;
@@ -19,15 +20,15 @@ import java.util.concurrent.TimeUnit;
 public class AppConfig {
 
     @Bean
-    public OkHttpClient okHttpClient() {
+    public OkHttpClient okHttpClient(@Value("${app.weather.http.client.timeout.millis}") int timeoutMillis) {
 
         var pool = new ConnectionPool(5, 20, TimeUnit.SECONDS);
 
         var builder = new OkHttpClient.Builder();
         builder.connectionPool(pool);
-        builder.connectTimeout(5, TimeUnit.SECONDS);
-        builder.readTimeout(5, TimeUnit.SECONDS);
-        builder.writeTimeout(5, TimeUnit.SECONDS);
+        builder.connectTimeout(timeoutMillis, TimeUnit.MILLISECONDS);
+        builder.readTimeout(timeoutMillis, TimeUnit.MILLISECONDS);
+        builder.writeTimeout(timeoutMillis, TimeUnit.MILLISECONDS);
         builder.retryOnConnectionFailure(true);
 
         return builder.build();

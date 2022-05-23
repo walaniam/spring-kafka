@@ -14,8 +14,9 @@ public class ObservationsScheduler {
 
     private final WeatherStationClient client;
 
-    @Scheduled(fixedDelay = 10, timeUnit = TimeUnit.SECONDS)
+    @Scheduled(initialDelay = 10, fixedDelay = 10, timeUnit = TimeUnit.SECONDS)
     public void fetch() {
+        log.debug("Scheduled fetching on client {}", client);
         var snapshot = client.fetch();
         log.info("Fetched: {}", snapshot);
     }
