@@ -15,5 +15,5 @@ public class WeatherStationResponse {
     private ZonedDateTime dateTime;
     private String outsideTemperature;
     private String insideTemperature;
-    private String pressurehPa;
+    private String pressureHpa;
 }

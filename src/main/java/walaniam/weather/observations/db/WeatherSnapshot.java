@@ -1,9 +1,6 @@
 package walaniam.weather.observations.db;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.ZonedDateTime;
 
 @Entity
@@ -14,6 +11,12 @@ public class WeatherSnapshot {
     private ZonedDateTime dateTime;
     private String outsideTemperature;
     private String insideTemperature;
-    private String pressurehPa;
+    private String pressureHpa;
+
+    @JoinColumn(name = "station_id", insertable = false, updatable = false)
+    @ManyToOne(targetEntity = WeatherStation.class, fetch = FetchType.EAGER)
     private WeatherStation station;
+
+    @Column(name = "station_id")
+    private Long stationId;
 }

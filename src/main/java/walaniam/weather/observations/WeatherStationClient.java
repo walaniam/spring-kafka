@@ -43,7 +43,7 @@ public class WeatherStationClient {
                 .dateTime(fromUtcString(data[0]))
                 .outsideTemperature(data[1])
                 .insideTemperature(data[2])
-                .pressurehPa(data[3])
+                .pressureHpa(data[3])
                 .build();
     }
 }
