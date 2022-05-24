@@ -11,7 +11,7 @@ import java.time.ZonedDateTime;
 @AllArgsConstructor
 @Data
 @Builder
-public class WeatherSnapshot {
+public class WeatherStationResponse {
     private ZonedDateTime dateTime;
     private String outsideTemperature;
     private String insideTemperature;

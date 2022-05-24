@@ -20,11 +20,13 @@ class WeatherStationClientIT {
 
     @Value("${app.weather.http.client.timeout.millis}")
     private int stationTimeout;
+    @Value("${app.weather.station.endpoint}")
+    private String stationEndpoint;
 
     @Autowired
     private WireMockServer wireMockServer;
     @Autowired
-    private WeatherStationClient stationClient;
+    private WeatherStationClient underTest;
 
     @Test
     void shouldFetchAndParseObservationCsv() {
@@ -36,7 +38,7 @@ class WeatherStationClientIT {
                 )
         );
 
-        var snapshot = stationClient.fetch();
+        var snapshot = underTest.fetch(stationEndpoint);
 
         assertThat(snapshot.getDateTime().toEpochSecond()).isEqualTo(1653313995L);
         assertThat(snapshot.getOutsideTemperature()).isEqualTo("15.53");
@@ -54,7 +56,7 @@ class WeatherStationClientIT {
                 )
         );
 
-        assertThrows(IllegalArgumentException.class, () -> stationClient.fetch());
+        assertThrows(IllegalArgumentException.class, () -> underTest.fetch(stationEndpoint));
     }
 
     @Test
@@ -64,7 +66,7 @@ class WeatherStationClientIT {
                 .willReturn(aResponse().withStatus(404))
         );
 
-        assertThrows(HttpClientErrorException.NotFound.class, () -> stationClient.fetch());
+        assertThrows(HttpClientErrorException.NotFound.class, () -> underTest.fetch(stationEndpoint));
     }
 
     @Test
@@ -74,6 +76,6 @@ class WeatherStationClientIT {
                 .willReturn(aResponse().withFixedDelay(stationTimeout + 500))
         );
 
-        assertThrows(ResourceAccessException.class, () -> stationClient.fetch());
+        assertThrows(ResourceAccessException.class, () -> underTest.fetch(stationEndpoint));
     }
 }
