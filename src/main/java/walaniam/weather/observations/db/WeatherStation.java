@@ -12,7 +12,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 public class WeatherStation {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     @Column(unique = true)
     private String address;
