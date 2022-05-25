@@ -19,8 +19,8 @@ public class ObservationsScheduler {
     @Scheduled(initialDelay = 10, fixedDelay = 10, timeUnit = TimeUnit.SECONDS)
     public void fetch() {
         log.debug("Scheduled fetching on client {}", client);
-        stationsConfig.getStations().stream().map(WeatherStation::getAddress).forEach(ip -> {
-            var snapshot = client.fetch(ip);
+        stationsConfig.getStations().stream().map(WeatherStation::getEndpoint).forEach(endpoint -> {
+            var snapshot = client.fetch(endpoint);
             log.info("Fetched: {}", snapshot);
         });
     }
