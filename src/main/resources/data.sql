@@ -1,0 +1,1 @@
+insert into weather_station (host, port, path, protocol, location) values ('192.168.0.137', 80, "/", "http", "balcony");

@@ -50,7 +50,7 @@ services:
     restart: on-failure
     volumes:
     - mysqldb_data:/var/lib/mysql
-#    - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
+    - ./docker/db/1_users.sql:/docker-entrypoint-initdb.d/1_users.sql
 
 volumes:
   mongodb_data:

@@ -21,9 +21,12 @@ public abstract class BaseIT {
             .withPassword("inmemory");
 
     @DynamicPropertySource
-    static void mysqlProperties(DynamicPropertyRegistry registry) {
+    static void applyTestProperties(DynamicPropertyRegistry registry) {
+        // mysql
         registry.add("spring.datasource.url", dbContainer::getJdbcUrl);
         registry.add("spring.datasource.password", dbContainer::getPassword);
         registry.add("spring.datasource.username", dbContainer::getUsername);
+        // app
+        registry.add("app.weather.http.client.timeout.millis", () -> 500);
     }
 }

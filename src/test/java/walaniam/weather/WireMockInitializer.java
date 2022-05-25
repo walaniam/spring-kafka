@@ -35,14 +35,13 @@ public class WireMockInitializer implements ApplicationContextInitializer<Config
                         "app.weather.stations[1].port=" + port,
                         "app.weather.stations[1].path=/garden",
                         "app.weather.stations[1].protocol=http",
-                        "app.weather.stations[1].location=garden",
-                        "app.weather.http.client.timeout.millis=500"
+                        "app.weather.stations[1].location=garden"
                 )
                 .applyTo(applicationContext);
 
         applicationContext.addApplicationListener(event -> {
             if (event instanceof ContextClosedEvent) {
-                log.info("Stopping wiremock server");
+                log.info("Stopping wiremock server running on port {}", port);
                 server.stop();
             }
         });
