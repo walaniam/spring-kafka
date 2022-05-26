@@ -1,7 +1,6 @@
 package walaniam.weather.observations;
 
 import lombok.RequiredArgsConstructor;
-import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.retry.annotation.Backoff;
@@ -18,7 +17,6 @@ import static walaniam.weather.common.time.DateTimeUtils.fromUtcString;
 @Slf4j
 @RequiredArgsConstructor
 @Service
-@ToString(of = "stationEndpoint")
 public class WeatherStationClient {
 
     private final RestTemplate restTemplate;

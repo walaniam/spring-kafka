@@ -41,16 +41,17 @@ services:
   mysql_db:
     image: mysql/mysql-server:8.0-amd64
     container_name: weather_mysql_db
+    command: --init-file /data/application/init_db.sql
     environment:
-      MYSQL_USER: mysql
-      MYSQL_PASSWORD: mysql
-      MYSQL_ROOT_PASSWORD: rootmysql
+      MYSQL_USER:
+      MYSQL_PASSWORD:
+      MYSQL_ROOT_PASSWORD:
     ports:
     - 3306:3306
     restart: on-failure
     volumes:
     - mysqldb_data:/var/lib/mysql
-    - ./docker/db/1_users.sql:/docker-entrypoint-initdb.d/1_users.sql
+    - ./target/classes/init_db.sql:/data/application/init_db.sql
 
 volumes:
   mongodb_data:
