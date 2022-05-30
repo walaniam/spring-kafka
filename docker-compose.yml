@@ -12,8 +12,8 @@ services:
       - 7070:7070
     restart: on-failure
     depends_on:
-#      - mongo_db
       - mysql_db
+#      - mongo_db
 
 #  mongo_db:
 #    image: mongo:4.4.13-focal
@@ -39,19 +39,20 @@ services:
 #      - mongo_db
 
   mysql_db:
-    image: mysql/mysql-server:8.0-amd64
+    image: mysql/mysql-server:8.0.29-amd64
     container_name: weather_mysql_db
-    command: --init-file /data/application/init_db.sql
+#    command: --init-file /data/application/init_db.sql
     environment:
       MYSQL_USER:
       MYSQL_PASSWORD:
       MYSQL_ROOT_PASSWORD:
+      MYSQL_DATABASE:
     ports:
     - 3306:3306
     restart: on-failure
     volumes:
     - mysqldb_data:/var/lib/mysql
-    - ./target/classes/init_db.sql:/data/application/init_db.sql
+#    - ./target/classes/init_db.sql:/data/application/init_db.sql
 
 volumes:
 #  mongodb_data:
