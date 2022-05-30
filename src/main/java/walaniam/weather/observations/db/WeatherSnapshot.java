@@ -1,8 +1,11 @@
 package walaniam.weather.observations.db;
 
+import lombok.Builder;
+
 import javax.persistence.*;
 import java.time.ZonedDateTime;
 
+@Builder
 @Entity
 @Table(uniqueConstraints = @UniqueConstraint(columnNames = {"dateTime", "stationId"}))
 public class WeatherSnapshot {

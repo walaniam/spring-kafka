@@ -12,31 +12,31 @@ services:
       - 7070:7070
     restart: on-failure
     depends_on:
-      - mongo_db
+#      - mongo_db
       - mysql_db
 
-  mongo_db:
-    image: mongo:4.4.13-focal
-    container_name: weather_mongo_db
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: mongo
-      MONGO_INITDB_ROOT_PASSWORD: mongo
-    volumes:
-      - mongodb_data:/data/db
-    restart: on-failure
-
-  mongo_ui:
-    image: mongo-express:1.0.0-alpha.4
-    container_name: weather_mongo_ui
-    environment:
-      ME_CONFIG_MONGODB_URL: "mongodb://mongo:mongo@mongo_db:27017?ssl=false"
-      ME_CONFIG_OPTIONS_READONLY: "true"
-      ME_CONFIG_OPTIONS_NO_DELETE: "false"
-    ports:
-    - 8081:8081
-    restart: on-failure
-    depends_on:
-      - mongo_db
+#  mongo_db:
+#    image: mongo:4.4.13-focal
+#    container_name: weather_mongo_db
+#    environment:
+#      MONGO_INITDB_ROOT_USERNAME: mongo
+#      MONGO_INITDB_ROOT_PASSWORD: mongo
+#    volumes:
+#      - mongodb_data:/data/db
+#    restart: on-failure
+#
+#  mongo_ui:
+#    image: mongo-express:1.0.0-alpha.4
+#    container_name: weather_mongo_ui
+#    environment:
+#      ME_CONFIG_MONGODB_URL: "mongodb://mongo:mongo@mongo_db:27017?ssl=false"
+#      ME_CONFIG_OPTIONS_READONLY: "true"
+#      ME_CONFIG_OPTIONS_NO_DELETE: "false"
+#    ports:
+#    - 8081:8081
+#    restart: on-failure
+#    depends_on:
+#      - mongo_db
 
   mysql_db:
     image: mysql/mysql-server:8.0-amd64
@@ -54,5 +54,5 @@ services:
     - ./target/classes/init_db.sql:/data/application/init_db.sql
 
 volumes:
-  mongodb_data:
+#  mongodb_data:
   mysqldb_data:
