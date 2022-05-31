@@ -25,12 +25,23 @@ public class WireMockInitializer implements ApplicationContextInitializer<Config
         log.info("wiremock server started on port {}", port);
 
         TestPropertyValues
-                .of("app.weather.station.endpoint=http://127.0.0.1:" + port)
+                .of(
+                        "app.weather.stations[0].host=127.0.0.1",
+                        "app.weather.stations[0].port=" + port,
+                        "app.weather.stations[0].path=/balcony",
+                        "app.weather.stations[0].protocol=http",
+                        "app.weather.stations[0].location=balcony",
+                        "app.weather.stations[1].host=127.0.0.1",
+                        "app.weather.stations[1].port=" + port,
+                        "app.weather.stations[1].path=/garden",
+                        "app.weather.stations[1].protocol=http",
+                        "app.weather.stations[1].location=garden"
+                )
                 .applyTo(applicationContext);
 
         applicationContext.addApplicationListener(event -> {
             if (event instanceof ContextClosedEvent) {
-                log.info("Stopping wiremock server");
+                log.info("Stopping wiremock server running on port {}", port);
                 server.stop();
             }
         });
