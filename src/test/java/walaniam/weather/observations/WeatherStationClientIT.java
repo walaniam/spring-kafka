@@ -29,7 +29,7 @@ public class WeatherStationClientIT extends BaseIT {
 
     @BeforeEach
     public void beforeTest() {
-        station = stationsConfig.getStations().stream()
+        station = stationsConfig.getAll().stream()
                 .findFirst()
                 .orElseThrow();
     }

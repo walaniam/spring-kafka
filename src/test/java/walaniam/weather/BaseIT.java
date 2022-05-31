@@ -21,6 +21,7 @@ public abstract class BaseIT {
     protected static final MySQLContainer<?> dbContainer = new MySQLContainer<>(
             DockerImageName.parse("mysql/mysql-server:8.0-amd64").asCompatibleSubstituteFor("mysql"))
             .withLogConsumer(new Slf4jLogConsumer(log))
+            .withAccessToHost(true)
             .withUsername("inmemory")
             .withPassword("inmemory");
 

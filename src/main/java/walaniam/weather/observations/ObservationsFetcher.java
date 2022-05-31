@@ -16,17 +16,17 @@ import java.util.stream.Collectors;
 @Slf4j
 @RequiredArgsConstructor
 @Component
-public class ObservationsScheduler {
+public class ObservationsFetcher {
 
     private final WeatherStationClient client;
     private final WeatherStationsConfig stationsConfig;
     private final WeatherSnapshotRepository repository;
 
     @Scheduled(initialDelay = 10, fixedDelay = 10, timeUnit = TimeUnit.SECONDS)
-    public void fetch() {
+    public void fetchAndSave() {
         log.debug("Scheduled execution, fetching with client {}", client);
 
-        var futures = stationsConfig.getStations().stream()
+        var futures = stationsConfig.getAll().stream()
                 .map(this::asyncFetch)
                 .toArray(size -> new CompletableFuture[size]);
 
