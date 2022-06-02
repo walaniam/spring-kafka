@@ -29,7 +29,7 @@ public class WeatherStationClient {
         log.info("Response: {}", response);
 
         var csv = response.getBody();
-        String[] data =  Pattern.compile(",").splitAsStream(csv)
+        var data =  Pattern.compile(",").splitAsStream(csv)
                 .map(String::trim)
                 .toArray(size -> new String[size]);
 
