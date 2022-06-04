@@ -44,7 +44,7 @@ public class WeatherStationClientIT extends BaseIT {
                 )
         );
 
-        var snapshot = underTest.fetch(station.getEndpoint());
+        var snapshot = underTest.fetch(station.getEndpoint().get());
 
         assertThat(snapshot.getDateTime().toEpochSecond()).isEqualTo(1653313995L);
         assertThat(snapshot.getOutsideTemperature()).isEqualTo("15.53");
@@ -62,7 +62,7 @@ public class WeatherStationClientIT extends BaseIT {
                 )
         );
 
-        assertThrows(IllegalArgumentException.class, () -> underTest.fetch(station.getEndpoint()));
+        assertThrows(IllegalArgumentException.class, () -> underTest.fetch(station.getEndpoint().get()));
     }
 
     @Test
@@ -72,7 +72,7 @@ public class WeatherStationClientIT extends BaseIT {
                 .willReturn(aResponse().withStatus(404))
         );
 
-        assertThrows(HttpClientErrorException.NotFound.class, () -> underTest.fetch(station.getEndpoint()));
+        assertThrows(HttpClientErrorException.NotFound.class, () -> underTest.fetch(station.getEndpoint().get()));
     }
 
     @Test
@@ -82,6 +82,6 @@ public class WeatherStationClientIT extends BaseIT {
                 .willReturn(aResponse().withFixedDelay(stationTimeout + 500))
         );
 
-        assertThrows(ResourceAccessException.class, () -> underTest.fetch(station.getEndpoint()));
+        assertThrows(ResourceAccessException.class, () -> underTest.fetch(station.getEndpoint().get()));
     }
 }

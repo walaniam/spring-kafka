@@ -9,6 +9,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface WeatherSnapshotRepository extends JpaRepository<WeatherSnapshot, Long> {
 
-    @Query(value = "SELECT s FROM WeatherSnapshot s ORDER BY dateTime DESC")
+    @Query("SELECT s FROM WeatherSnapshot s ORDER BY dateTime DESC")
     Page<WeatherSnapshot> findAllWithPagination(Pageable pageable);
 }

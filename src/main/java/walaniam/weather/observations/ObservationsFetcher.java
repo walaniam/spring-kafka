@@ -27,6 +27,7 @@ public class ObservationsFetcher {
         log.debug("Scheduled execution, fetching with client {}", client);
 
         var futures = stationsConfig.getAll().stream()
+                .filter(station -> station.getEndpoint().isPresent())
                 .map(this::asyncFetch)
                 .toArray(size -> new CompletableFuture[size]);
 
@@ -42,7 +43,7 @@ public class ObservationsFetcher {
 
     private CompletableFuture<WeatherSnapshot> asyncFetch(WeatherStation station) {
         return CompletableFuture.supplyAsync(() -> {
-            var endpoint = station.getEndpoint();
+            var endpoint = station.getEndpoint().get();
             var response = client.fetch(endpoint);
             return WeatherSnapshot.builder()
                     .stationId(station.getId())

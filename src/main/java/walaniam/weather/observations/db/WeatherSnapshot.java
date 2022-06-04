@@ -13,7 +13,7 @@ import java.time.ZonedDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(uniqueConstraints = @UniqueConstraint(columnNames = {"dateTime", "stationId"}))
+@Table(uniqueConstraints = @UniqueConstraint(name = "unique_date_station", columnNames = {"dateTime", "stationId"}))
 public class WeatherSnapshot {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
