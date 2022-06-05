@@ -12,14 +12,11 @@ import walaniam.weather.observations.db.WeatherStationRepository;
 import walaniam.weather.observations.dto.WeatherData;
 
 import java.util.Optional;
-import java.util.concurrent.atomic.AtomicInteger;
 
 @Slf4j
 @RequiredArgsConstructor
 @Component
 public class WeatherObservationsService {
-
-    final AtomicInteger counter = new AtomicInteger();
 
     private final WeatherSnapshotRepository weatherSnapshotRepository;
     private final WeatherStationRepository stationRepository;
@@ -45,16 +42,7 @@ public class WeatherObservationsService {
                 .pressureHpa(data.getPressureHpa())
                 .build();
 
-        log.debug("Saving counter={}, {}", counter.incrementAndGet(), snapshot);
+        log.debug("Saving {}", snapshot);
         weatherSnapshotRepository.saveAndFlush(snapshot);
     }
-
-//    private long stationId() {
-//        var all = stationRepository.findAll();
-//        if (all.size() != 1) {
-//            // TODO
-//            throw new IllegalStateException("More than one station");
-//        }
-//        return all.get(0).getId();
-//    }
 }
