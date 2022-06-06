@@ -30,12 +30,7 @@ public class WireMockInitializer implements ApplicationContextInitializer<Config
                         "app.weather.stations[0].port=" + port,
                         "app.weather.stations[0].path=/balcony",
                         "app.weather.stations[0].protocol=http",
-                        "app.weather.stations[0].location=balcony",
-                        "app.weather.stations[1].host=127.0.0.1",
-                        "app.weather.stations[1].port=" + port,
-                        "app.weather.stations[1].path=/garden",
-                        "app.weather.stations[1].protocol=http",
-                        "app.weather.stations[1].location=garden"
+                        "app.weather.stations[0].location=balcony"
                 )
                 .applyTo(applicationContext);
 

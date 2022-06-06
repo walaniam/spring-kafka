@@ -22,11 +22,12 @@ public class ObservationsFetcher {
     private final WeatherStationsConfig stationsConfig;
     private final WeatherSnapshotRepository repository;
 
-    @Scheduled(initialDelay = 10, fixedDelay = 60, timeUnit = TimeUnit.SECONDS)
+    @Scheduled(initialDelay = 30, fixedDelay = 60, timeUnit = TimeUnit.SECONDS)
     public void fetchAndSave() {
         log.debug("Scheduled execution, fetching with client {}", client);
 
         var futures = stationsConfig.getAll().stream()
+                .filter(station -> station.getEndpoint().isPresent())
                 .map(this::asyncFetch)
                 .toArray(size -> new CompletableFuture[size]);
 
@@ -42,7 +43,7 @@ public class ObservationsFetcher {
 
     private CompletableFuture<WeatherSnapshot> asyncFetch(WeatherStation station) {
         return CompletableFuture.supplyAsync(() -> {
-            var endpoint = station.getEndpoint();
+            var endpoint = station.getEndpoint().get();
             var response = client.fetch(endpoint);
             return WeatherSnapshot.builder()
                     .stationId(station.getId())
