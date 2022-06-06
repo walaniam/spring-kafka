@@ -28,7 +28,9 @@ public abstract class BaseIT {
     @DynamicPropertySource
     static void applyTestProperties(DynamicPropertyRegistry registry) {
         // mysql
-        registry.add("spring.datasource.url", dbContainer::getJdbcUrl);
+        var jdbcUrl = dbContainer.getJdbcUrl();
+        log.info("---- Setting JDBC url: {}", jdbcUrl);
+        registry.add("spring.datasource.url", () -> jdbcUrl);
         registry.add("spring.datasource.password", dbContainer::getPassword);
         registry.add("spring.datasource.username", dbContainer::getUsername);
         // app

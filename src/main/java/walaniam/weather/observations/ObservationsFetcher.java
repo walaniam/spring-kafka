@@ -22,7 +22,7 @@ public class ObservationsFetcher {
     private final WeatherStationsConfig stationsConfig;
     private final WeatherSnapshotRepository repository;
 
-    @Scheduled(initialDelay = 10, fixedDelay = 60, timeUnit = TimeUnit.SECONDS)
+    @Scheduled(initialDelay = 30, fixedDelay = 60, timeUnit = TimeUnit.SECONDS)
     public void fetchAndSave() {
         log.debug("Scheduled execution, fetching with client {}", client);
 
