@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 
 @Slf4j
 @RequiredArgsConstructor
-@Component
+//@Component
 public class ObservationsFetcher {
 
     private final WeatherStationClient client;
