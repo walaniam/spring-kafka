@@ -39,7 +39,7 @@ services:
 #      - mongo_db
 
   mysql_db:
-    image: mysql/mysql-server:8.0.29-amd64
+    image: mysql/mysql-server:8.0.31-amd64
     container_name: weather_mysql_db
 #    command: --init-file /data/application/init_db.sql
     environment:
